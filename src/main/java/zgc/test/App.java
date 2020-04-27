@@ -9,9 +9,9 @@ import java.util.ArrayList;
 
 public final class App {
 
-	public static final String heap(int run) {
-		return "Heap:" + (run == 0 ? "⁰" : run == 1 ? "¹" : "") +
-			" " + ((double)Runtime.getRuntime().totalMemory())/(1000*1000*1000) + " GB";
+	public static final String heap(final int run) {
+		return "Heap:" + (run == 0 ? "⁰" : run == 1 ? "¹" : "") + " " +
+			((double)Runtime.getRuntime().totalMemory())/(1000*1000*1000) + " GB";
 	}
 
 	public static final void println(final Object o) {
@@ -19,8 +19,6 @@ public final class App {
 	}
 
 	public static final void main(final String[] args) {
-
-		lru_cache.test();
 
 		GCinfo.print();
 		println("Original " + heap(-1));
