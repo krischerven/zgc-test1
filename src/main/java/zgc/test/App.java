@@ -9,9 +9,18 @@ import java.util.ArrayList;
 
 public final class App {
 
+	public static final String truncate(final String double_) {
+		// 5.123
+		if (double_.length() > 5) {
+			return double_.substring(0, 5);
+		} else {
+			return double_;
+		}
+	}
+
 	public static final String heap(final int run) {
 		return "Heap:" + (run == 0 ? "⁰" : run == 1 ? "¹" : "") + " " +
-			((double)Runtime.getRuntime().totalMemory())/(1000*1000*1000) + " GB";
+			truncate(""+(((double)Runtime.getRuntime().totalMemory())/(1000*1000*1000))) + " GB";
 	}
 
 	public static final void println(final Object o) {
