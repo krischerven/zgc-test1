@@ -1,6 +1,9 @@
 *.class
+*.jar
+*.bat
 
 # Ignore Gradle project-specific cache directory
+gradlew
 .gradle
 
 # Ignore Gradle build output directory
