@@ -75,13 +75,23 @@ func (l *LRUcache) Free() {
 	l.list.Init()
 }
 
-func (l *LRUcache) is(keys ...*int) bool {
-	if l.Size() != len(keys) {
+func (l *LRUcache) elements() []int {
+	ret := make([]int, l.Size())
+	i := 0
+	for e := l.list.Front(); e != nil; e = e.Next() {
+		ret[i] = *(e.Value.(*int))
+		i++
+	}
+	return ret
+}
+
+func (l *LRUcache) is(elems ...*int) bool {
+	if l.Size() != len(elems) {
 		return false
 	} else {
 		i := 0
 		for e := l.list.Front(); e != nil; e = e.Next() {
-			if *(e.Value.(*int)) != *keys[i] {
+			if *(e.Value.(*int)) != *elems[i] {
 				return false
 			} else {
 				i++
