@@ -9,6 +9,11 @@ import java.util.ArrayList;
 
 public final class App {
 
+	private static final class Settings {
+		static short LRU_CACHE_MILLIONS_OF_ITEMS = 50;
+		static short GC_ITERATIONS = 5;
+	}
+
 	public static final String truncate(final String double_) {
 		// 5.123
 		if (double_.length() > 5) {
@@ -32,12 +37,12 @@ public final class App {
 
 		GCinfo.print();
 		println("Original " + heap(-1));
-		final var c = new lru_cache<Integer>(1000*1000*50);
-		for (var i = 0; i < 1000*1000*50; ++i) {
+		final var c = new lru_cache<Integer>(1000*1000*Settings.LRU_CACHE_MILLIONS_OF_ITEMS);
+		for (var i = 0; i < 1000*1000*Settings.LRU_CACHE_MILLIONS_OF_ITEMS; ++i) {
 			c.refer(i);
 		}
 
-		for (var i = 0; i < 5; ++i) {
+		for (var i = 0; i < Settings.GC_ITERATIONS; ++i) {
 			println(null);
 			println(heap(0));
 			final var g = new GCthread();
