@@ -88,5 +88,5 @@ func main() {
 	println(c.Size())
 	// latency stats
 	latency.med /= latency.c
-	print2(fmt.Sprintf("Latency (min, max, med): %d, %d, %d", latency.min, latency.max, latency.med))
+	print2(fmt.Sprintf("Latency (min, max, med): %d µs, %d µs, %d µs", latency.min, latency.max, latency.med))
 }
