@@ -7,16 +7,16 @@ import (
 
 func New(cap int) *LRUcache {
 	return &LRUcache{
-		cap:   cap,
+		cap:  cap,
 		list: list.New(),
-		map_:    make(map[*int]*list.Element, cap),
+		map_: make(map[*int]*list.Element, cap),
 	}
 }
 
 type LRUcache struct {
-	cap   int
+	cap  int
 	list *list.List
-	map_    map[*int]*list.Element
+	map_ map[*int]*list.Element
 }
 
 func (l *LRUcache) Refer(key *int) {
