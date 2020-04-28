@@ -11,7 +11,6 @@ func assert(t *testing.T, b bool, have interface{}, want interface{}) {
 }
 
 func TestLRUcache(t *testing.T) {
-	// 5 4 1 3
 	c := New(4)
 	new := func(i int) *int {
 		return &i
