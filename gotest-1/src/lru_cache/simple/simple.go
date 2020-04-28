@@ -60,7 +60,7 @@ func (l *LRUcache) Size() int {
 	return len(l.map_)
 }
 
-func (l *LRUcache) Is(keys ...*int) bool {
+func (l *LRUcache) is(keys ...*int) bool {
 	if l.Size() != len(keys) {
 		return false
 	} else {

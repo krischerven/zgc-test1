@@ -75,7 +75,7 @@ func (l *LRUcache) Free() {
 	l.list.Init()
 }
 
-func (l *LRUcache) Is(keys ...*int) bool {
+func (l *LRUcache) is(keys ...*int) bool {
 	if l.Size() != len(keys) {
 		return false
 	} else {
