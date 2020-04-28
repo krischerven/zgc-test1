@@ -35,12 +35,6 @@ func (l *LRUcache) no(key *int) bool {
 	}
 }
 
-func (l *LRUcache) Display() {
-	for e := l.list.Front(); e != nil; e = e.Next() {
-		fmt.Println(*(e.Value.(*int)))
-	}
-}
-
 func (l *LRUcache) emplace(key *int) {
 	if e, ok := l.map_[key]; ok {
 		l.list.Remove(e)
@@ -50,6 +44,16 @@ func (l *LRUcache) emplace(key *int) {
 	}
 	l.list.PushFront(key)
 	l.map_[key] = l.list.Front()
+}
+
+func (l *LRUcache) Display() {
+	for e := l.list.Front(); e != nil; e = e.Next() {
+		fmt.Println(*(e.Value.(*int)))
+	}
+}
+
+func (l *LRUcache) Cap() int {
+	return l.cap
 }
 
 func (l *LRUcache) Size() int {

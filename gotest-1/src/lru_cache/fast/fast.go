@@ -46,12 +46,6 @@ func (l *LRUcache) no(key *int) bool {
 	}
 }
 
-func (l *LRUcache) Display() {
-	for e := l.list.Front(); e != nil; e = e.Next() {
-		fmt.Println(*(e.Value.(*int)))
-	}
-}
-
 func (l *LRUcache) emplace(key *int) {
 	if e, ok := l.map_[ptr(key)]; ok {
 		l.list.Remove((*list.Element)(unsafe.Pointer(e)))
@@ -63,12 +57,22 @@ func (l *LRUcache) emplace(key *int) {
 	l.map_[ptr(key)] = ptr2(l.list.Front())
 }
 
+func (l *LRUcache) Display() {
+	for e := l.list.Front(); e != nil; e = e.Next() {
+		fmt.Println(*(e.Value.(*int)))
+	}
+}
+
 func (l *LRUcache) Cap() int {
 	return l.cap
 }
 
 func (l *LRUcache) Size() int {
 	return len(l.map_)
+}
+
+func (l *LRUcache) Free() {
+	l.list.Init()
 }
 
 func (l *LRUcache) Is(keys ...*int) bool {
@@ -85,8 +89,4 @@ func (l *LRUcache) Is(keys ...*int) bool {
 		}
 		return true
 	}
-}
-
-func (l *LRUcache) Free() {
-	l.list.Init()
 }
