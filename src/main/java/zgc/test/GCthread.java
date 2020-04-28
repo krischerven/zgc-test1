@@ -8,6 +8,13 @@ import java.time.Instant;
 
 public final class GCthread extends Thread {
 
+	private static final class LatencyStats {
+		static long min = 0;
+		static long max = 0;
+		static long med = 0;
+		static long count = 0;
+	}
+
 	private final static Instant time() {
 		return Instant.now().truncatedTo(ChronoUnit.MICROS);
 	}
@@ -18,15 +25,36 @@ public final class GCthread extends Thread {
 		System.exit(0);
 	}
 
+	public final static void printLatencyStats() {
+		LatencyStats.med /= LatencyStats.count;
+		System.out.println("Latency (min, max, med): " +
+				LatencyStats.min+" µs, " +
+				LatencyStats.max+" µs, " +
+				LatencyStats.med+" µs"
+		);
+	}
+
 	@Override
    public final void run ()
    {
+		// wait on main thread to call System.gc()
 		final var t0 = time();
 		try {
 			TimeUnit.MILLISECONDS.sleep(10);
 		} catch (final InterruptedException e) {
 			error(e);
 		}
-		System.out.println("Latency: " + (((Duration.between(t0, time()).toNanos())/1000) - 10000) + " µs");
+
+		// stats handling
+		var latency = ((Duration.between(t0, time()).toNanos())/1000) - 10000;
+		if (LatencyStats.min == 0 || latency < LatencyStats.min) {
+			LatencyStats.min = latency;
+		}
+		LatencyStats.max = Math.max(LatencyStats.max, latency);
+		LatencyStats.med += latency;
+		++LatencyStats.count;
+
+		// output handling
+		System.out.println("Latency: " + latency + " µs");
    }
 }

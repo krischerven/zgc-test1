@@ -55,5 +55,7 @@ public final class App {
 			println("Time to perform a full GC: " + stopWatch.getTime() + " ms");
 			stopWatch.reset();
 		}
+
+		GCthread.printLatencyStats();
 	}
 }
