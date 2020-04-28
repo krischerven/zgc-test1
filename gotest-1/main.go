@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 	"github.com/tj/go-spin"
-	lru "github.com/krischerven/zgc-test1/gotest-1/src/lru_cache/simple"
+	lru "github.com/krischerven/zgc-test1/gotest-1/src/lru_cache/fast"
 	"runtime"
 	"time"
 )
