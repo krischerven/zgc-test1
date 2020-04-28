@@ -4,9 +4,9 @@ import (
 	"testing"
 )
 
-func assert(t *testing.T, b bool) {
+func assert(t *testing.T, b bool, have interface{}, want interface{}) {
 	if !b {
-		t.Errorf("Assertion failed!")
+		t.Errorf("Assertion failed! have: %v, want %v", have, want)
 	}
 }
 
@@ -22,5 +22,10 @@ func TestLRUcache(t *testing.T) {
 	c.Refer(new(1))
 	c.Refer(new(4))
 	c.Refer(new(5))
-	assert(t, c.is(new(5), new(4), new(1), new(3)))
+	assert(
+		t,
+		c.is(new(5), new(4), new(1), new(3)),
+		c.elements(),
+		[]int{5, 4, 1, 3},
+	)
 }
