@@ -14,6 +14,7 @@ public final class GCthread extends Thread {
 
 	// helper function
 	private final static void error(final Exception e) {
+		System.out.println("Fatal Error: " + e);
 		System.exit(0);
 	}
 
