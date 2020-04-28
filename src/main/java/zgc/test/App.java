@@ -63,7 +63,7 @@ public final class App {
 				Thread.sleep(stopWatch.getTime()/2);
 			} catch (final InterruptedException e) {
 				System.out.println("Fatal Error: " + e);
-				System.exit(0);
+				System.exit(1);
 			}
 			stopWatch.reset();
 		}
