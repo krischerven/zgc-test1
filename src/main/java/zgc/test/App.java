@@ -20,7 +20,8 @@ public final class App {
 
 	public static final String heap(final int run) {
 		return "Heap:" + (run == 0 ? "⁰" : run == 1 ? "¹" : "") + " " +
-			truncate(""+(((double)Runtime.getRuntime().totalMemory())/(1000*1000*1000))) + " GB";
+			truncate(""+(((double)Runtime.getRuntime().totalMemory())/(1000*1000*1000)))
+			+ " GB";
 	}
 
 	public static final void println(final Object o) {
