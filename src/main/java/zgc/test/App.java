@@ -58,6 +58,13 @@ public final class App {
 			stopWatch.stop();
 			println(heap(1));
 			println("Time to perform a full GC: " + stopWatch.getTime() + " ms");
+			println("Sleeping for " + stopWatch.getTime()/2 + " ms");
+			try {
+				Thread.sleep(stopWatch.getTime()/2);
+			} catch (final InterruptedException e) {
+				System.out.println("Fatal Error: " + e);
+				System.exit(0);
+			}
 			stopWatch.reset();
 		}
 
