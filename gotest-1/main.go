@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"lru_cache/simple"
+	lru "lru_cache/simple"
 	"runtime"
 	"time"
 )
 
 const (
 	lruCacheMillionsOfItems = 50
-	gcIterations            = 5
+	gcIterations            = 20
 )
 
 func main() {
@@ -44,7 +44,7 @@ func main() {
 	}
 	print2("Original " + heap(-1))
 	print2("Allocating the LRU cache...")
-	c := simple.New(1000 * 1000 * lruCacheMillionsOfItems)
+	c := lru.New(1000 * 1000 * lruCacheMillionsOfItems)
 	for i := 0; i < 1000*1000*lruCacheMillionsOfItems; i++ {
 		c.Refer(newInt(i))
 	}
