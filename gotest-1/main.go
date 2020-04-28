@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/tj/go-spin"
 	lru "lru_cache/simple"
 	"runtime"
 	"time"
@@ -43,12 +44,23 @@ func main() {
 		}
 	}
 	print2("Original " + heap(-1))
-	print2("Allocating the LRU cache...")
+	allocated := false
+	go func() {
+		s := spin.New()
+		secs := float64(0)
+		for !allocated {
+  			fmt.Printf("\r\033 [Allocating the LRU cache\033[m %s (%d)", s.Next(), int(secs))
+			time.Sleep(time.Millisecond*100)
+			secs += 0.1
+		}
+	} ()
 	c := lru.New(1000 * 1000 * lruCacheMillionsOfItems)
 	for i := 0; i < 1000*1000*lruCacheMillionsOfItems; i++ {
 		c.Refer(newInt(i))
 	}
-	print2("Finished allocating.")
+	allocated = !allocated
+	print2(nil)
+	print2("Finished allocating the LRU cache.")
 	for i := 0; i < gcIterations; i++ {
 		print2(nil)
 		print2(heap(0))
