@@ -20,6 +20,17 @@ public final class lru_cache<T> {
 		c.display();
 	}
 
+	public static final Set<Integer> testSet() {
+		final var c = new lru_cache<Integer>(4);
+		c.refer(1);
+		c.refer(2);
+		c.refer(3);
+		c.refer(1);
+		c.refer(4);
+		c.refer(5);
+		return c.cache;
+	}
+
 	public lru_cache(final int _capacity) {
 		cache = new LinkedHashSet<T>(_capacity);
 		capacity = _capacity;

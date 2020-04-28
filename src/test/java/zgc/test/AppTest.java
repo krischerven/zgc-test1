@@ -4,10 +4,18 @@
 package zgc.test;
 
 import static org.junit.Assert.*;
+import java.util.LinkedHashSet;
 import org.junit.Test;
 
 public final class AppTest {
-	@Test public final void testAppWIP() {
-		App classUnderTest = new App();
+	@Test public final void testLRUCache() {
+		final var lhs = new LinkedHashSet<Integer>(4);
+		{
+			lhs.add(3);
+			lhs.add(1);
+			lhs.add(4);
+			lhs.add(5);
+		}
+		assertEquals(lru_cache.testSet(), lhs);
 	}
 }
