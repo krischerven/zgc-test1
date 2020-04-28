@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/tj/go-spin"
-	lru "github.com/krischerven/zgc-test1/lru_cache/simple"
+	lru "github.com/krischerven/zgc-test1/gotest-1/src/lru_cache/simple"
 	"runtime"
 	"time"
 )

@@ -1,4 +1,4 @@
-module github.com/krischerven/zgc-test1
+module github.com/krischerven/zgc-test1/gotest-1
 
 go 1.14
 
