@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"github.com/tj/go-spin"
 	lru "github.com/krischerven/zgc-test1/gotest-1/src/lru_cache/simple"
 	"runtime"
@@ -49,7 +50,7 @@ func main() {
 		s := spin.New()
 		secs := float64(0)
 		for !allocated {
-  			fmt.Printf("\r\033 [Allocating the LRU cache\033[m %s (%d)", s.Next(), int(secs))
+  			fmt.Printf("\r\033 [Allocating the LRU cache\033[m %s (%.1f)", s.Next(), secs)
 			time.Sleep(time.Millisecond*100)
 			secs += 0.1
 		}
@@ -61,13 +62,21 @@ func main() {
 	allocated = !allocated
 	print2(nil)
 	print2("Finished allocating the LRU cache.")
+	latency := struct{min, max, med, c int64} {0, 0, 0, 0}
 	for i := 0; i < gcIterations; i++ {
 		print2(nil)
 		print2(heap(0))
 		go func() {
 			t0 := time.Now()
 			time.Sleep(time.Millisecond * 10)
-			print2(fmt.Sprintf("Latency: %d µs", time.Now().Sub(t0).Microseconds()-10000))
+			latency_ := time.Now().Sub(t0).Microseconds()-10000
+			print2(fmt.Sprintf("Latency: %d µs", latency_))
+			if latency.min == 0 || latency_ < latency.min {
+				latency.min = latency_
+			}
+			latency.max = int64(math.Max(float64(latency.max), float64(latency_)))
+			latency.med += latency_
+			latency.c++
 		}()
 		t1 := time.Now()
 		runtime.GC()
@@ -77,4 +86,7 @@ func main() {
 	}
 	// force memory to stay alive
 	println(c.Size())
+	// latency stats
+	latency.med /= latency.c
+	print2(fmt.Sprintf("Latency (min, max, med): %d, %d, %d", latency.min, latency.max, latency.med))
 }
