@@ -3,8 +3,8 @@
  */
 package zgc.test;
 
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 public final class AppTest {
 	@Test public final void testAppWIP() {

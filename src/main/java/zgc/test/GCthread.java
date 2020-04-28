@@ -1,10 +1,10 @@
 package zgc.test;
 
-import java.time.Instant;
-import java.time.Duration;
+import org.apache.commons.lang3.time.StopWatch;
 import java.util.concurrent.TimeUnit;
 import java.time.temporal.ChronoUnit;
-import org.apache.commons.lang3.time.StopWatch;
+import java.time.Duration;
+import java.time.Instant;
 
 public final class GCthread extends Thread {
 
