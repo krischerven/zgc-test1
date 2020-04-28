@@ -37,10 +37,15 @@ public final class App {
 
 		GCinfo.print();
 		println("Original " + heap(-1));
+		println("Allocating the LRU cache...");
+		final var sw = new StopWatch();
+		sw.start();
 		final var c = new lru_cache<Integer>(1000*1000*Settings.LRU_CACHE_MILLIONS_OF_ITEMS);
 		for (var i = 0; i < 1000*1000*Settings.LRU_CACHE_MILLIONS_OF_ITEMS; ++i) {
 			c.refer(i);
 		}
+		sw.stop();
+		println("Allocated the LRU cache in " + sw.getTime() + " ms");
 
 		for (var i = 0; i < Settings.GC_ITERATIONS; ++i) {
 			println(null);
