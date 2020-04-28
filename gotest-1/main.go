@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	lruCacheMillionsOfItems = 50
+	lruCacheMillionsOfItems = 20
 	gcIterations            = 20
 )
 

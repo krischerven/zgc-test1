@@ -10,8 +10,8 @@ import java.util.ArrayList;
 public final class App {
 
 	private static final class Settings {
-		static final short LRU_CACHE_MILLIONS_OF_ITEMS = 50;
-		static final short GC_ITERATIONS = 5;
+		static final short LRU_CACHE_MILLIONS_OF_ITEMS = 20;
+		static final short GC_ITERATIONS = 20;
 	}
 
 	public static final String truncate(final String double_) {

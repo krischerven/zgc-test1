@@ -6,7 +6,7 @@ gradle
 
 java 14+
 
-5.1 GB of free RAM
+2.2 GB of free RAM
 
 ### Usage
 gradle run
