@@ -62,7 +62,7 @@ func main() {
 	allocated = !allocated
 	print2(nil)
 	print2("Finished allocating the LRU cache.")
-	latency := struct{ min, max, mean, c int64 }{0, 0, 0, 0}
+	latency := struct{ min, max, mean, mean2, c, c2 int64 }{0, 0, 0, 0, 0, 0}
 	for i := 0; i < gcIterations; i++ {
 		print2(nil)
 		print2(heap(0))
@@ -76,6 +76,12 @@ func main() {
 			}
 			latency.max = int64(math.Max(float64(latency.max), float64(latency_)))
 			latency.mean += latency_
+			// don't count latencies > 100,000 microseconds for this,
+			// unless we already skipped one.
+			if int(latency.c2) < i || latency_ < 100_000 {
+				latency.mean2 += latency_
+				latency.c2++
+			}
 			latency.c++
 		}()
 		t1 := time.Now()
@@ -88,8 +94,9 @@ func main() {
 	}
 	// latency stats
 	latency.mean /= latency.c
-	// best results so far: Latency (min, max, mean): 68 µs, 721 µs, 302 µs
-	print2(fmt.Sprintf("Latency (min, max, mean): %d µs, %d µs, %d µs", latency.min, latency.max, latency.mean))
+	// best results so far on the fast cache: Latency (min, max, mean): 68 µs, 721 µs, 302 µs
+	print2(fmt.Sprintf("Latency (min, max, mean, mean(2)): %d µs, %d µs, %d µs, %d µs",
+		latency.min, latency.max, latency.mean, latency.mean2))
 	// force memory to stay alive (this branch will never execute)
 	if c.Size() == -1 {
 		println(c.Size())
