@@ -11,7 +11,7 @@ public final class GCthread extends Thread {
 	private static final class LatencyStats {
 		static long min = 0;
 		static long max = 0;
-		static long med = 0;
+		static long mean = 0;
 		static long count = 0;
 	}
 
@@ -26,11 +26,11 @@ public final class GCthread extends Thread {
 	}
 
 	public final static void printLatencyStats() {
-		LatencyStats.med /= LatencyStats.count;
-		System.out.println("Latency (min, max, med): " +
+		LatencyStats.mean /= LatencyStats.count;
+		System.out.println("Latency (min, max, mean): " +
 				LatencyStats.min+" µs, " +
 				LatencyStats.max+" µs, " +
-				LatencyStats.med+" µs"
+				LatencyStats.mean+" µs"
 		);
 	}
 
@@ -51,7 +51,7 @@ public final class GCthread extends Thread {
 			LatencyStats.min = latency;
 		}
 		LatencyStats.max = Math.max(LatencyStats.max, latency);
-		LatencyStats.med += latency;
+		LatencyStats.mean += latency;
 		++LatencyStats.count;
 
 		// output handling

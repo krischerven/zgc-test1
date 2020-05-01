@@ -62,7 +62,7 @@ func main() {
 	allocated = !allocated
 	print2(nil)
 	print2("Finished allocating the LRU cache.")
-	latency := struct{min, max, med, c int64} {0, 0, 0, 0}
+	latency := struct{min, max, mean, c int64} {0, 0, 0, 0}
 	for i := 0; i < gcIterations; i++ {
 		print2(nil)
 		print2(heap(0))
@@ -75,7 +75,7 @@ func main() {
 				latency.min = latency_
 			}
 			latency.max = int64(math.Max(float64(latency.max), float64(latency_)))
-			latency.med += latency_
+			latency.mean += latency_
 			latency.c++
 		}()
 		t1 := time.Now()
@@ -89,6 +89,6 @@ func main() {
 	// force memory to stay alive
 	println(c.Size())
 	// latency stats
-	latency.med /= latency.c
-	print2(fmt.Sprintf("Latency (min, max, med): %d µs, %d µs, %d µs", latency.min, latency.max, latency.med))
+	latency.mean /= latency.c
+	print2(fmt.Sprintf("Latency (min, max, mean): %d µs, %d µs, %d µs", latency.min, latency.max, latency.mean))
 }
