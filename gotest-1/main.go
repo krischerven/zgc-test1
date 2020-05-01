@@ -86,9 +86,12 @@ func main() {
 		print2("Sleeping for " + fmt.Sprintf("%d", t2.Milliseconds()/2) + " ms");
 		time.Sleep(time.Millisecond*time.Duration(t2.Milliseconds()/2))
 	}
-	// force memory to stay alive
-	println(c.Size())
 	// latency stats
 	latency.mean /= latency.c
+	// best results so far: Latency (min, max, mean): 68 µs, 721 µs, 302 µs
 	print2(fmt.Sprintf("Latency (min, max, mean): %d µs, %d µs, %d µs", latency.min, latency.max, latency.mean))
+	// force memory to stay alive (this branch will never execute)
+	if c.Size() == -1 {
+		consume(c.Size())
+	}
 }
