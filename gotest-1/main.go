@@ -76,9 +76,8 @@ func main() {
 			}
 			latency.max = int64(math.Max(float64(latency.max), float64(latency_)))
 			latency.mean += latency_
-			// don't count latencies > 100,000 microseconds for this,
-			// unless we already skipped one.
-			if int(latency.c2) < i || latency_ < 100_000 {
+			// only count small latencies for mean(2)
+			if latency_ < 100_000 {
 				latency.mean2 += latency_
 				latency.c2++
 			}
@@ -94,6 +93,7 @@ func main() {
 	}
 	// latency stats
 	latency.mean /= latency.c
+	latency.mean2 /= latency.c2
 	// best results so far on the fast cache: Latency (min, max, mean): 68 µs, 721 µs, 302 µs
 	print2(fmt.Sprintf("Latency (min, max, mean, mean(2)): %d µs, %d µs, %d µs, %d µs",
 		latency.min, latency.max, latency.mean, latency.mean2))
