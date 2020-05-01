@@ -92,6 +92,6 @@ func main() {
 	print2(fmt.Sprintf("Latency (min, max, mean): %d µs, %d µs, %d µs", latency.min, latency.max, latency.mean))
 	// force memory to stay alive (this branch will never execute)
 	if c.Size() == -1 {
-		consume(c.Size())
+		println(c.Size())
 	}
 }
