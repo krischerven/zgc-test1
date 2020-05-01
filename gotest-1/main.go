@@ -83,6 +83,8 @@ func main() {
 		t2 := time.Now().Sub(t1)
 		print2(heap(1))
 		print2("Time to perform a full GC: " + fmt.Sprintf("%d", t2.Milliseconds()) + " ms")
+		print2("Sleeping for " + fmt.Sprintf("%d", t2.Milliseconds()/2) + " ms");
+		time.Sleep(time.Millisecond*time.Duration(t2.Milliseconds()/2))
 	}
 	// force memory to stay alive
 	println(c.Size())
