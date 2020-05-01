@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"math"
-	"github.com/tj/go-spin"
 	lru "github.com/krischerven/zgc-test1/gotest-1/src/lru_cache/fast"
+	"github.com/tj/go-spin"
+	"math"
 	"runtime"
 	"time"
 )
@@ -50,11 +50,11 @@ func main() {
 		s := spin.New()
 		secs := float64(0)
 		for !allocated {
-  			fmt.Printf("\r\033 [Allocating the LRU cache\033[m %s (%.1f)", s.Next(), secs)
-			time.Sleep(time.Millisecond*100)
+			fmt.Printf("\r\033 [Allocating the LRU cache\033[m %s (%.1f)", s.Next(), secs)
+			time.Sleep(time.Millisecond * 100)
 			secs += 0.1
 		}
-	} ()
+	}()
 	c := lru.New(1000 * 1000 * lruCacheMillionsOfItems)
 	for i := 0; i < 1000*1000*lruCacheMillionsOfItems; i++ {
 		c.Refer(newInt(i))
@@ -62,14 +62,14 @@ func main() {
 	allocated = !allocated
 	print2(nil)
 	print2("Finished allocating the LRU cache.")
-	latency := struct{min, max, mean, c int64} {0, 0, 0, 0}
+	latency := struct{ min, max, mean, c int64 }{0, 0, 0, 0}
 	for i := 0; i < gcIterations; i++ {
 		print2(nil)
 		print2(heap(0))
 		go func() {
 			t0 := time.Now()
 			time.Sleep(time.Millisecond * 10)
-			latency_ := time.Now().Sub(t0).Microseconds()-10000
+			latency_ := time.Now().Sub(t0).Microseconds() - 10000
 			print2(fmt.Sprintf("Latency: %d µs", latency_))
 			if latency.min == 0 || latency_ < latency.min {
 				latency.min = latency_
@@ -83,8 +83,8 @@ func main() {
 		t2 := time.Now().Sub(t1)
 		print2(heap(1))
 		print2("Time to perform a full GC: " + fmt.Sprintf("%d", t2.Milliseconds()) + " ms")
-		print2("Sleeping for " + fmt.Sprintf("%d", t2.Milliseconds()/2) + " ms");
-		time.Sleep(time.Millisecond*time.Duration(t2.Milliseconds()/2))
+		print2("Sleeping for " + fmt.Sprintf("%d", t2.Milliseconds()/2) + " ms")
+		time.Sleep(time.Millisecond * time.Duration(t2.Milliseconds()/2))
 	}
 	// latency stats
 	latency.mean /= latency.c
