@@ -17,3 +17,4 @@ build
 
 # Go
 gotest-1/gotest-1
+*.test.go
