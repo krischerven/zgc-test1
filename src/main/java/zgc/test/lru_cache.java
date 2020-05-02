@@ -42,6 +42,10 @@ public final class lru_cache<T> {
 		}
 	}
 
+	public final boolean hit(final T key) {
+		return cache.contains(key);
+	}
+
 	private final boolean no(final T key) {
 		if (cache.contains(key)) {
 			cache.remove(key);
