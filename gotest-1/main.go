@@ -44,6 +44,10 @@ func main() {
 			fmt.Println(x)
 		}
 	}
+	done := func() {
+		panic("Done")
+	}
+	_ = done
 	print2("Original " + heap(-1))
 	allocated := false
 	go func() {
