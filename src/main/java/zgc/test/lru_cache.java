@@ -71,4 +71,12 @@ public final class lru_cache<T> {
 		}
 		cache.add(key);
 	}
+
+	public final int size() {
+		return cache.size();
+	}
+
+	public final int cap() {
+		return capacity;
+	}
 }
