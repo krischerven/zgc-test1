@@ -5,6 +5,7 @@ package zgc.test;
 
 import static org.junit.Assert.*;
 import java.util.LinkedHashSet;
+import java.util.Arrays;
 import org.junit.Test;
 
 public final class AppTest {
@@ -17,5 +18,20 @@ public final class AppTest {
 			lhs.add(5);
 		}
 		assertEquals(lru_cache.testSet(), lhs);
+		var lru = new lru_cache(4);
+		{
+			lru.refer(1);
+			lru.refer(2);
+			lru.refer(3);
+			lru.refer(4);
+		}
+		assertEquals(lru.size(), 4);
+		assertEquals(lru.cap(), 4);
+		for (var i : Arrays.asList(1, 2, 3, 4)) {
+			assert(lru.hit(i));
+		}
+		for (var i : Arrays.asList(5, 6, 7, 8)) {
+			assert(!lru.hit(i));
+		}
 	}
 }
