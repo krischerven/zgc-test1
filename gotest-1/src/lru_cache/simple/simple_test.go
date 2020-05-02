@@ -1,6 +1,7 @@
 package simple
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -39,4 +40,20 @@ func TestLRUcache(t *testing.T) {
 		c.Size(),
 		4,
 	)
+	for _, i := range []int{5, 4, 1, 3} {
+		assert(
+			t,
+			c.Hit(&i) == true,
+			fmt.Sprintf("%t (%d)", false, i),
+			fmt.Sprintf("%t (%d)", true, i),
+		)
+	}
+	for _, i := range []int{2, 6, 7} {
+		assert(
+			t,
+			c.Hit(&i) == false,
+			fmt.Sprintf("%t (%d)", true, i),
+			fmt.Sprintf("%t (%d)", false, i),
+		)
+	}
 }
