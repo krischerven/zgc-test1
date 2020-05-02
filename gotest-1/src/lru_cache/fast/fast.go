@@ -36,7 +36,6 @@ func (l *LRUcache) Refer(key *int) {
 	}
 }
 
-
 func (l *LRUcache) Hit(key *int) bool {
 	for e := l.list.Front(); e != nil; e = e.Next() {
 		if *(e.Value.(*int)) == *key {
