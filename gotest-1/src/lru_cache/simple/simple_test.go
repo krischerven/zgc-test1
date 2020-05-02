@@ -48,7 +48,7 @@ func TestLRUcache(t *testing.T) {
 			fmt.Sprintf("%t (%d)", true, i),
 		)
 	}
-	for _, i := range []int{2, 6, 7} {
+	for _, i := range []int{2, 6, 7, 8} {
 		assert(
 			t,
 			c.Hit(&i) == false,
