@@ -14,7 +14,7 @@ import (
 
 const (
 	lruCacheMillionsOfItems = 20
-	gcIterations            = 20
+	gcIterations            = 10
 	gcf_cache               = false
 )
 
