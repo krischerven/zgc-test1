@@ -109,3 +109,7 @@ func (l *LRUcache) is(elems ...*int) bool {
 		return true
 	}
 }
+
+func (l *LRUcache) Name() string {
+	return "LRU Cache"
+}
