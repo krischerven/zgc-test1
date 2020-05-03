@@ -5,6 +5,8 @@ import (
 	gcf "github.com/krischerven/zgc-test1/gotest-1/src/gcf_cache"
 	lru "github.com/krischerven/zgc-test1/gotest-1/src/lru_cache/fast"
 	"github.com/tj/go-spin"
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
 	"math"
 	"runtime"
 	"time"
@@ -79,7 +81,10 @@ func main() {
 	}
 	allocated = !allocated
 	print2(nil)
-	print2(fmt.Sprintf("Finished allocating the %s cache. (size=%d)", c.Name(), c.Size()))
+	print2(
+		fmt.Sprintf("Finished allocating the %s cache. (size=%s)", c.Name(),
+			message.NewPrinter(language.English).Sprintf("%d", c.Size())),
+	)
 	latency := struct{ min, max, mean, mean2, c, c2 int64 }{0, 0, 0, 0, 0, 0}
 	for i := 0; i < gcIterations; i++ {
 		print2(nil)
