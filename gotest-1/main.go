@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	gcf "github.com/krischerven/zgc-test1/gotest-1/src/gcf_cache"
 	lru "github.com/krischerven/zgc-test1/gotest-1/src/lru_cache/fast"
 	"github.com/tj/go-spin"
 	"math"
@@ -12,6 +13,7 @@ import (
 const (
 	lruCacheMillionsOfItems = 20
 	gcIterations            = 20
+	gcf_cache               = false
 )
 
 func main() {
@@ -50,22 +52,34 @@ func main() {
 	_ = done
 	print2("Original " + heap(-1))
 	allocated := false
+	var c interface {
+		Size() int
+		Name() string
+	}
+	if gcf_cache {
+		c = gcf.NewPtr(1000 * 1000 * lruCacheMillionsOfItems)
+	} else {
+		c = lru.New(1000 * 1000 * lruCacheMillionsOfItems)
+	}
 	go func() {
 		s := spin.New()
 		secs := float64(0)
 		for !allocated {
-			fmt.Printf("\r\033 [Allocating the LRU cache\033[m %s (%.1f)", s.Next(), secs)
+			fmt.Printf("\r\033 [Allocating the %s \033[m %s (%.1f)", c.Name(), s.Next(), secs)
 			time.Sleep(time.Millisecond * 100)
 			secs += 0.1
 		}
 	}()
-	c := lru.New(1000 * 1000 * lruCacheMillionsOfItems)
 	for i := 0; i < 1000*1000*lruCacheMillionsOfItems; i++ {
-		c.Refer(newInt(i))
+		if gcf_cache {
+			c.(*gcf.GCFcache).Refer(gcf.Key{Value: i})
+		} else {
+			c.(*lru.LRUcache).Refer(newInt(i))
+		}
 	}
 	allocated = !allocated
 	print2(nil)
-	print2("Finished allocating the LRU cache.")
+	print2(fmt.Sprintf("Finished allocating the %s cache. (size=%d)", c.Name(), c.Size()))
 	latency := struct{ min, max, mean, mean2, c, c2 int64 }{0, 0, 0, 0, 0, 0}
 	for i := 0; i < gcIterations; i++ {
 		print2(nil)
