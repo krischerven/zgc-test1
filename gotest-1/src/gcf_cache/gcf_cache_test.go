@@ -16,8 +16,11 @@ func TestGCFcache(t *testing.T) {
 	new := func(i int) Key {
 		return Key{i}
 	}
-	// repeat keys don't work
 	c.Refer(new(1))
+	{ // ensure repeat keys are not allowed
+		err := c.Refer(new(1))
+		assert(t, err != nil, nil, err)
+	}
 	c.Refer(new(2))
 	c.Refer(new(3))
 	c.Refer(new(4))

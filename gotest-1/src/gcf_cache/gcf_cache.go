@@ -1,6 +1,7 @@
 package gcf_cache
 
 import (
+	"errors"
 	"fmt"
 	"sort"
 )
@@ -37,9 +38,12 @@ func NewPtr(cap uint32) *GCFcache {
 }
 
 // GCFcache logic
-func (g *GCFcache) Refer(key Key) {
+func (g *GCFcache) Refer(key Key) error {
 	if g.no(key) {
 		g.emplace(key)
+		return nil
+	} else {
+		return errors.New("GCF cache does not support duplicate keys")
 	}
 }
 
