@@ -2,6 +2,7 @@ package gcf_cache
 
 import (
 	"fmt"
+	"sort"
 )
 
 // A non-pointer key
@@ -87,6 +88,9 @@ func (g *GCFcache) elements() []Key {
 		ret[i] = key
 		i++
 	}
+	sort.Slice(ret, func(i, j int) bool {
+		return ret[i].Value < ret[j].Value
+	})
 	return ret
 }
 
