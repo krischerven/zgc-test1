@@ -68,10 +68,40 @@ func (g *GCFcache) Display() {
 	}
 }
 
+func (g *GCFcache) Cap() int {
+	return int(g.cap)
+}
+
 func (g *GCFcache) Size() int {
 	return len(g.kmap)
 }
 
 func (g *GCFcache) Name() string {
 	return "GCF Cache"
+}
+
+func (g *GCFcache) elements() []Key {
+	ret := make([]Key, g.Size())
+	i := 0
+	for key := range g.kmap {
+		ret[i] = key
+		i++
+	}
+	return ret
+}
+
+func (g *GCFcache) is(elems ...Key) bool {
+	if g.Size() != len(elems) {
+		return false
+	} else {
+		i := 0
+		for _, key := range g.elements() {
+			if key != elems[i] {
+				return false
+			} else {
+				i++
+			}
+		}
+		return true
+	}
 }
