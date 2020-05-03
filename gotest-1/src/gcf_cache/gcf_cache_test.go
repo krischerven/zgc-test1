@@ -21,11 +21,14 @@ func TestGCFcache(t *testing.T) {
 	c.Refer(new(4))
 	c.Refer(new(5))
 	c.Refer(new(6))
+	c.Refer(new(7))
+	c.Refer(new(8))
+	c.Refer(new(9))
 	test.Assert(
 		t,
-		c.is(new(3), new(4), new(5), new(6)),
+		c.is(new(6), new(7), new(8), new(9)),
 		c.elements(),
-		[]Key{new(3), new(4), new(5), new(6)},
+		[]Key{new(6), new(7), new(8), new(9)},
 	)
 	test.Assert(
 		t,
@@ -39,7 +42,7 @@ func TestGCFcache(t *testing.T) {
 		c.Size(),
 		4,
 	)
-	for _, i := range []int{3, 4, 5, 6} {
+	for _, i := range []int{6, 7, 8, 9} {
 		test.Assert(
 			t,
 			c.Hit(Key{i}) == true,
@@ -47,7 +50,7 @@ func TestGCFcache(t *testing.T) {
 			fmt.Sprintf("%t (%d)", true, i),
 		)
 	}
-	for _, i := range []int{1, 2, 8, 9} {
+	for _, i := range []int{1, 2, 3, 4} {
 		test.Assert(
 			t,
 			c.Hit(Key{i}) == false,
