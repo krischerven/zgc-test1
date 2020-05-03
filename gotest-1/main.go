@@ -73,7 +73,7 @@ func main() {
 		if gcf_cache {
 			c.(*gcf.GCFcache).Refer(gcf.Key{Value: i})
 		} else {
-			c.(*lru.LRUcache).Refer(func(i int) *int { return &i } (i))
+			c.(*lru.LRUcache).Refer(func(i int) *int { return &i }(i))
 		}
 	}
 	allocated = !allocated
