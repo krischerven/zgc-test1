@@ -19,9 +19,6 @@ const (
 )
 
 func main() {
-	newInt := func(i int) *int {
-		return &i
-	}
 	heap := func(run int) string {
 		truncate := func(s string) string {
 			if len(s) > 5 {
@@ -76,7 +73,7 @@ func main() {
 		if gcf_cache {
 			c.(*gcf.GCFcache).Refer(gcf.Key{Value: i})
 		} else {
-			c.(*lru.LRUcache).Refer(newInt(i))
+			c.(*lru.LRUcache).Refer(func(i int) *int { return &i } (i))
 		}
 	}
 	allocated = !allocated
