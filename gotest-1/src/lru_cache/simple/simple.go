@@ -69,6 +69,10 @@ func (l *LRUcache) Size() int {
 	return len(l.map_)
 }
 
+func (l *LRUcache) Name() string {
+	return "LRU Cache"
+}
+
 func (l *LRUcache) elements() []int {
 	ret := make([]int, l.Size())
 	i := 0
@@ -93,8 +97,4 @@ func (l *LRUcache) is(elems ...*int) bool {
 		}
 		return true
 	}
-}
-
-func (l *LRUcache) Name() string {
-	return "LRU Cache"
 }
