@@ -37,4 +37,6 @@ application {
     mainClassName = 'zgc.test.App'
 }
 
-applicationDefaultJvmArgs = ["-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-XX:MaxHeapSize=9G"/*"-Xlog:gc*"*/]
+// comment out this line to disable ZGC
+// remove the comment below to enable logging
+applicationDefaultJvmArgs = ["-XX:+UnlockExperimentalVMOptions", "-XX:+UseZGC", "-XX:MaxHeapSize=9G" /*,"-Xlog:gc*"*/]
